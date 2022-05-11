@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@lmarcel/exe-code-analytics": "^1.0.3",
-    "code-complexity": "l-marcel/code-complexity#module",
     "json-highlight": "^0.1.2",
     "lodash": "^4.17.21",
     "next": "12.1.6",
