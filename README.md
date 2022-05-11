@@ -11,7 +11,7 @@ Check the Exe: Code Analytics repository: [Exe Code Analytics](https://github.co
 - [x] Churn //Not coveraged
 - [x] Methods
 - [x] Classes
-- [] Complexity //In work
+- [ ] Complexity //In work
 
 ## Installation
 ```bash
