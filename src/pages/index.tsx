@@ -1,5 +1,4 @@
-import { Analytic } from "@lmarcel/exe-code-analytics";
-import { File } from '@lmarcel/exe-code-analytics/dist/providers/Analytic';
+import { Analytic, AnalyticFile } from "@lmarcel/exe-code-analytics";
 import highlight from "json-highlight";
 import { debounce } from "lodash";
 import { useEffect, useRef, useState } from 'react';
@@ -9,7 +8,7 @@ function Home() {
   const [result, setResult] = useState({});
 
   const handleGetAnalytics = useRef(debounce((text: string) => {
-    let files: File[] = [
+    let files: AnalyticFile[] = [
       {
         path: "realtime.txt",
         content: text
@@ -23,7 +22,7 @@ function Home() {
       ...result[0],
       content: result[0].content.length > 200? result[0].content.slice(0, 200) + "...":result[0].content
     }:{});
-  }, 1000));
+  }, 500));
 
   useEffect(() => {
     handleGetAnalytics.current(text);
@@ -43,8 +42,22 @@ function Home() {
     <textarea 
       value={text} 
       onChange={e => setText(e.target.value)}
+      onKeyDown={e => {
+        if (e.key == 'Tab') {
+          e.preventDefault();
+          var start = e.currentTarget.selectionStart;
+          var end = e.currentTarget.selectionEnd;
+      
+          e.currentTarget.value = e.currentTarget.value.substring(0, start) +
+            "\t" + e.currentTarget.value.substring(end);
+      
+          e.currentTarget.selectionStart =
+          e.currentTarget.selectionEnd = start + 1;
+        }
+      }}
       placeholder="Put your code here."
       className="
+        accent-zinc-50
         text-zinc-200
         p-4
         w-full
@@ -102,6 +115,8 @@ function Home() {
         text-zinc-300
         hover:underline
         underline-offset-4
+        h-min
+        px-1
       "
     >
       @l-marcel
