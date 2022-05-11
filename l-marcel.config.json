@@ -1,0 +1,12 @@
+{
+  "name": "Exe: Code Analytics Playground",
+  "translatedDescription": "Just a playground for my library: @lmarcel/exe-code-analytics",
+  "technologies": [
+    "Next.js",
+    "JavaScript",
+    "TypesScript",
+    "Tailwind",
+    "HTML",
+    "CSS"
+  ]
+}
