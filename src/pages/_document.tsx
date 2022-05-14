@@ -6,7 +6,6 @@ export default class MyDocument extends Document {
       <Html translate="no">
         <Head>
           <meta name="google" content="notranslate"/>
-          <title>Exe Code Analytics</title>
         </Head>
         <body>
           <Main/>
