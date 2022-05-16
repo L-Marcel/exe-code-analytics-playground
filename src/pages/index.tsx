@@ -2,21 +2,33 @@ import { Analytic, AnalyticFile } from "@lmarcel/exe-code-analytics";
 import highlight from "json-highlight";
 import { debounce } from "lodash";
 import Head from "next/head";
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function Home() {
   const [text, setText] = useState("");
   const [result, setResult] = useState({});
+  const [files, setFiles] = useState<AnalyticFile[]>([
+    {
+      path: "realtime.txt",
+      content: ""
+    }
+  ]);
 
-  const handleGetAnalytics = useRef(debounce((text: string) => {
-    let files: AnalyticFile[] = [
-      {
-        path: "realtime.txt",
-        content: text
-      }
-    ];
+  const handleGetAnalytics = useRef(debounce((text: string, currentFiles: AnalyticFile[]) => {
+    const newfiles = currentFiles.map((c, i) => {
+      if(i === currentFiles.length - 1) {
+        return {
+          ...c,
+          content: text
+        };
+      };
 
-    const analytic = new Analytic(files);
+      return c;
+    });
+
+    setFiles(newfiles);
+
+    const analytic = new Analytic(newfiles);
     const result = analytic.execute();
 
     setResult(result.length >= 1? {
@@ -25,9 +37,19 @@ function Home() {
     }:{});
   }, 500));
 
+  const handleSaveFile = useCallback(() => {
+    setFiles(f => [...f, f[f.length - 1]]);
+  }, [setFiles]);
+
   useEffect(() => {
-    handleGetAnalytics.current(text);
-  }, [text]);
+    if(text !== files[files.length - 1].content) {
+      handleGetAnalytics.current(text, files);
+    };
+  }, [text, files]);
+
+  useEffect(() => {
+    console.log(files);
+  }, [files]);
 
   return (
     <>
@@ -45,45 +67,92 @@ function Home() {
           relative
         "
       >
-        <textarea 
-          value={text} 
-          onChange={e => setText(e.target.value)}
-          onKeyDown={e => {
-            if (e.key == 'Tab') {
-              e.preventDefault();
-              var start = e.currentTarget.selectionStart;
-              var end = e.currentTarget.selectionEnd;
-          
-              e.currentTarget.value = e.currentTarget.value.substring(0, start) +
-                "\t" + e.currentTarget.value.substring(end);
-          
-              e.currentTarget.selectionStart =
-              e.currentTarget.selectionEnd = start + 1;
-            }
-          }}
-          placeholder="Put your code here."
+        <div
           className="
-            accent-zinc-50
-            text-zinc-200
-            p-4
+            flex
+            relative
             w-full
             md:w-8/12
             h-4/6
             md:h-full
-            bg-zinc-800
-            resize-none
-            overflow-y-auto
-            scrollbar-thin
-            scrollbar-thumb-zinc-400
-            scrollbar-track-zinc-700
-            placeholder:text-zinc-400
-            outline-none
-            ring-gray-400
-            hover:ring-2
-            focus:ring-2
-            focus-visible:ring-2
           "
-        />
+        >
+          <button
+            className="
+              flex
+              absolute
+              top-[-4px]
+              z-10
+              right-6
+              bg-zinc-400
+              px-4
+              py-1.5
+              rounded-b-md
+              outline-none
+              hover:bg-zinc-300
+              ring-gray-400
+              hover:ring-2
+              focus:ring-2
+              focus-visible:ring-2
+              ring-offset-2
+              ring-offset-zinc-800
+              opacity-50
+              hover:opacity-100
+              transition-opacity
+            "
+            onClick={handleSaveFile}
+          >simulate commit: {files.length}</button>
+          <textarea 
+            value={text} 
+            onChange={e => setText(e.target.value)}
+            onKeyDown={e => {
+              if (e.key == 'Tab') {
+                e.preventDefault();
+                var start = e.currentTarget.selectionStart;
+                var end = e.currentTarget.selectionEnd;
+            
+                e.currentTarget.value = e.currentTarget.value.substring(0, start) +
+                  "\t" + e.currentTarget.value.substring(end);
+            
+                e.currentTarget.selectionStart =
+                e.currentTarget.selectionEnd = start + 1;
+              }
+            }}
+            placeholder={`Put your code here to test.` +
+            `\n\nSimulate commit -> create a fake commit to test churn;` + 
+            `\n\nComplexity -> file cyclomatic complexity;` +
+            `\nChurn -> number of time that a file is changed (commited);` +
+            `\nSloc -> number of non-empty lines;` +
+            `\nMethods -> all methods found in the code;` +
+            `\nClasses -> all classes found in the code.` +
+            `\n\nFiles with the same name in a commit indicate a change, ` + 
+            `\nExe Code Analytics use this to calculate the churn.` +
+            `\n\nNote: to maintain performance in the playground, churn ` +
+            `\nis update when file is changed.`
+            }
+            className="
+              accent-zinc-50
+              text-zinc-200
+              bg-zinc-800
+              resize-none
+              overflow-y-auto
+              scrollbar-thin
+              scrollbar-thumb-zinc-400
+              scrollbar-track-zinc-700
+              placeholder:text-zinc-400
+              outline-none
+              ring-gray-400
+              hover:ring-2
+              focus:ring-2
+              focus-visible:ring-2
+              absolute
+              w-full
+              h-full
+              top-0
+              p-4
+            "
+          />
+        </div>
         <pre
           className="
             p-4
