@@ -47,10 +47,6 @@ function Home() {
     };
   }, [text, files]);
 
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
-
   return (
     <>
       <Head>
