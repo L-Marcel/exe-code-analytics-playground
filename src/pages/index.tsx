@@ -99,7 +99,7 @@ function Home() {
             scrollbar-thin
             scrollbar-thumb-zinc-400
             scrollbar-track-zinc-700
-            items-center
+            items-start
             md:items-start
             whitespace-pre-wrap
           "
@@ -127,6 +127,15 @@ function Home() {
         >
           @l-marcel
         </a>
+        <div
+          className="
+            flex
+            md:hidden
+            h-6
+            w-full
+            bg-zinc-800
+          "
+        />
       </div>
     </>
   );

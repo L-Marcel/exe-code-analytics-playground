@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@lmarcel/exe-code-analytics": "^3.8.0",
+    "@lmarcel/exe-code-analytics": "^3.9.2",
     "json-highlight": "^0.1.2",
     "lodash": "^4.17.21",
     "next": "12.1.6",
