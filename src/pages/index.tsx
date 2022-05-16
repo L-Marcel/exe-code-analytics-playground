@@ -122,9 +122,9 @@ function Home() {
             `\nMethods -> all methods found in the code;` +
             `\nClasses -> all classes found in the code.` +
             `\n\nFiles with the same name in a commit indicate a change, ` + 
-            `\nExe Code Analytics use this to calculate the churn.` +
+            `Exe Code Analytics use this to calculate the churn.` +
             `\n\nNote: to maintain performance in the playground, churn ` +
-            `\nis update when file is changed.`
+            `is update when file is changed.`
             }
             className="
               accent-zinc-50
