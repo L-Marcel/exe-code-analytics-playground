@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 function Home() {
   const [text, setText] = useState("");
-  const [result, setResult] = useState({});
+  const [result, setResult] = useState<any>(null);
   const [files, setFiles] = useState<AnalyticFile[]>([
     {
       path: "realtime.txt",
@@ -42,10 +42,10 @@ function Home() {
   }, [setFiles]);
 
   useEffect(() => {
-    if(text !== files[files.length - 1].content) {
+    if(text !== files[files.length - 1].content || result === null) {
       handleGetAnalytics.current(text, files);
     };
-  }, [text, files]);
+  }, [text, files, result]);
 
   return (
     <>
@@ -79,7 +79,7 @@ function Home() {
               absolute
               top-[-4px]
               z-10
-              right-6
+              right-2
               bg-zinc-400
               px-4
               py-1.5
