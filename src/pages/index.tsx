@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HelpModal } from "../components/HelpModal";
-import { Search } from "../components/Search";
+import { SearchSelect } from "../components/SearchSelect";
 import initialConfig from "../config/intial.json";
 
 var mimeModes: ModeMap | null = null;
@@ -139,7 +139,7 @@ function Home() {
               gap-x-[1px]
             "
           >
-            <Search
+            <SearchSelect
               onSelect={(m, mode) => {
                 setMime(m);
                 setMode(mode);
