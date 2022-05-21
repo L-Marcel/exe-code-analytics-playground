@@ -30,10 +30,11 @@ function Home() {
 
     const analytic = new Analytic(newfiles);
     const result = analytic.execute();
-
+    const lastIndex = result.length - 1;
+    
     setResult(result.length >= 1? {
-      ...result[0],
-      content: result[0].content.length > 200? result[0].content.slice(0, 200) + "...":result[0].content
+      ...result[lastIndex],
+      content: result[lastIndex].content.length > 200? result[lastIndex].content.slice(0, 200) + "...":result[lastIndex].content
     }:{});
   }, 500));
 
@@ -42,7 +43,7 @@ function Home() {
   }, [setFiles]);
 
   useEffect(() => {
-    if(text !== files[files.length - 1].content || result === null) {
+    if(text !== files[files.length - 1].content || result === null || (files[files.length - 1].churn || 0) < (files.length - 1) ) {
       handleGetAnalytics.current(text, files);
     };
   }, [text, files, result]);
@@ -98,33 +99,20 @@ function Home() {
             "
             onClick={handleSaveFile}
           >simulate commit: {files.length}</button>
-          <textarea 
-            value={text} 
+          <textarea
+            value={text}
             onChange={e => setText(e.target.value)}
-            onKeyDown={e => {
-              if (e.key == 'Tab') {
-                e.preventDefault();
-                var start = e.currentTarget.selectionStart;
-                var end = e.currentTarget.selectionEnd;
-            
-                e.currentTarget.value = e.currentTarget.value.substring(0, start) +
-                  "\t" + e.currentTarget.value.substring(end);
-            
-                e.currentTarget.selectionStart =
-                e.currentTarget.selectionEnd = start + 1;
-              }
-            }}
-            placeholder={`Put your code here to test.` +
-            `\n\nSimulate commit -> create a fake commit to test churn;` + 
-            `\n\nComplexity -> file cyclomatic complexity;` +
-            `\nChurn -> number of time that a file is changed (commited);` +
-            `\nSloc -> number of non-empty lines;` +
-            `\nMethods -> all methods found in the code;` +
-            `\nClasses -> all classes found in the code.` +
-            `\n\nFiles with the same name in a commit indicate a change, ` + 
-            `Exe Code Analytics use this to calculate the churn.` +
-            `\n\nNote: to maintain performance in the playground, churn ` +
-            `is update when file is changed.`
+            placeholder={
+              `Analytic version: ${Analytic.getVersion()}` +
+              `\n\nPut your code here to test.` +
+              `\n\nSimulate commit -> create a fake commit to test churn;` + 
+              `\n\nComplexity -> file cyclomatic complexity;` +
+              `\nChurn -> number of time that a file is changed (commited);` +
+              `\nSloc -> number of non-empty lines;` +
+              `\nMethods -> all methods found in the code;` +
+              `\nClasses -> all classes found in the code.` +
+              `\n\nFiles with the same name in a commit indicate a change, ` + 
+              `Exe Code Analytics use this to calculate the churn.`
             }
             className="
               accent-zinc-50
