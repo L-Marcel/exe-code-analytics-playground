@@ -1,36 +1,39 @@
 import { Analytic, AnalyticFile } from "@lmarcel/exe-code-analytics";
+import { ModeMap } from "codemirror";
 import highlight from "json-highlight";
 import { debounce } from "lodash";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Search } from "../components/search";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { HelpModal } from "../components/HelpModal";
+import { Search } from "../components/Search";
+import initialConfig from "../config/intial.json";
+
+var mimeModes: ModeMap | null = null;
+
+if (typeof window !== "undefined") {
+  mimeModes = require("codemirror").mimeModes;
+};
 
 const CodeMirror = dynamic<any>(() => {
   import("codemirror/mode/xml/xml");
   import("codemirror/mode/javascript/javascript");
+  import("codemirror/mode/jsx/jsx");
+  import("codemirror/mode/clike/clike");
+  import("codemirror/mode/python/python");
 
   return import("react-codemirror");
 }, { ssr: false });
 
 function Home() {
-  const [mime, setMime] = useState("txt");
-  const [mode, setMode] = useState("text");
-  const [text, setText] = useState(` Analytic version: ${Analytic.getVersion()}` +
-  `\n\n Put your code here to test.` +
-  `\n\n Simulate commit -> create a fake commit to test churn;` + 
-  `\n\n Complexity -> file cyclomatic complexity (unavaliable for Python);` +
-  `\n Churn -> number of time that a file is changed (commited);` +
-  `\n Sloc -> number of non-empty lines;` +
-  `\n Methods -> all methods found in the code;` +
-  `\n Classes -> all classes found in the code.` +
-  `\n\n Files with the same name in a commit indicate a change, ` + 
-  `\n Exe Code Analytics use this to calculate the churn.`);
+  const [mime, setMime] = useState("tsx");
+  const [mode, setMode] = useState("text/typescript-jsx");
+  const [text, setText] = useState(initialConfig.text);
 
   const [result, setResult] = useState<any>(null);
   const [files, setFiles] = useState<AnalyticFile[]>([
     {
-      path: "realtime.txt",
+      path: "realtime.tsx",
       content: ""
     }
   ]);
@@ -51,12 +54,15 @@ function Home() {
 
     const analytic = new Analytic(newfiles);
     const result = analytic.execute();
-    const lastIndex = result.length - 1;
     
-    setResult(result.length >= 1? {
-      ...result[lastIndex],
-      content: result[lastIndex].content.length > 200? result[lastIndex].content.slice(0, 200) + "...":result[lastIndex].content
-    }:{});
+    if(Array.isArray(result) && result.length > 0) {
+      const lastIndex = result.length - 1;
+    
+      setResult(result.length >= 1? {
+        ...result[lastIndex],
+        content: result[lastIndex].content.length > 200? result[lastIndex].content.slice(0, 200) + "...":result[lastIndex].content
+      }:{});
+    };
   }, 500));
 
   const handleSaveFile = useCallback(() => {
@@ -64,14 +70,16 @@ function Home() {
   }, [setFiles]);
 
   useEffect(() => {
-    if(text !== files[files.length - 1].content || result === null || ((files[files.length - 1].churn || 0) < (files.length - 1) && files.length > 1)) {
+    const lastIndex = files?.length - 1;
+
+    if(text !== files[lastIndex].content || result === null || ((files[lastIndex].churn || 0) < (lastIndex) && files?.length > 1)) {
       handleGetAnalytics.current(text, files);
     };
   }, [text, files, result]);
 
   useEffect(() => {
     let fileMime = "";
-    const file = files[files.length - 1];
+    const file = files[files?.length - 1];
 
     if(file.path.includes(".")) {
       const [_, _mime] = file.path.split(".");
@@ -158,37 +166,16 @@ function Home() {
                 transition-opacity
               "
               onClick={handleSaveFile}
-            >commit</button>
-            {/*<button
-              className="
-                flex
-                text-zinc-100
-              bg-zinc-600
-                px-4
-                py-1.5
-                outline-none
-                hover:bg-zinc-500
-                ring-gray-400
-                h-full
-                hover:ring-2
-                focus:ring-2
-                focus-visible:ring-2
-                ring-offset-2
-                ring-offset-zinc-800
-                opacity-50
-                hover:opacity-100
-                transition-opacity
-              "
-              onClick={handleSaveFile}
-            >help</button>*/}
+            >Commit</button>
+            <HelpModal/>
           </div>
           <CodeMirror
             value={text}
-            onChange={(t:any) => setText(t)}
+            onChange={(value: any) => setText(value)}
             options={{
               theme: "dracula",
               lineNumbers: true,
-              mode
+              mode: mimeModes !== null? mimeModes[mode]:"text"
             }}
           />
         </div>

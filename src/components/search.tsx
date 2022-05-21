@@ -2,23 +2,23 @@ import { Combobox } from "@headlessui/react";
 import { SelectorIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 
-const languages = [
-  { id: 1, name: "JavaScript", unavailable: false, mime: "js", mode: "javascript" },
-  { id: 2, name: "TypeScript", unavailable: false, mime: "ts", mode: "javascript" },
-  { id: 3, name: "JavaScript (JSX)", unavailable: false, mime: "jsx", mode: "javascript" },
-  { id: 4, name: "javascript (TSX)", unavailable: false, mime: "tsx", mode: "javascript" },
-  { id: 5, name: "Java", unavailable: false, mime: "java", mode: "clike" },
-  { id: 6, name: "Python", unavailable: false, mime: "py", mode: "python" },
-  { id: 7, name: "Text", unavailable: false, mime: "txt", mode: "text" },
-  { id: 8, name: "HTML/XML", unavailable: false, mime: "xml", mode: "xml" }
-]
-
 interface SearchProps {
   onSelect: (mime: string, mode: string) => void;
 };
 
+const languages = [
+  { id: 1, name: "JavaScript", mime: "js", mode: "text/javascript" },
+  { id: 2, name: "TypeScript", mime: "ts", mode: "text/typescript" },
+  { id: 3, name: "JavaScript (JSX)", mime: "jsx", mode: "text/jsx" },
+  { id: 4, name: "TypeScript (TSX)", mime: "tsx", mode: "text/typescript-jsx" },
+  { id: 5, name: "Java", mime: "java", mode: "text/x-java" },
+  { id: 6, name: "Python", mime: "py", mode: "text/x-python" },
+  { id: 7, name: "Text", mime: "txt", mode: "text" },
+  { id: 8, name: "HTML", mime: "html", mode: "text/html" }
+];
+
 function Search({ onSelect }: SearchProps) {
-  const [selectedLang, setSelectedLang] = useState(languages[6]);
+  const [selectedLang, setSelectedLang] = useState(languages[3]);
   const [query, setQuery] = useState("");
 
   const filteredLanguages =
@@ -94,7 +94,6 @@ function Search({ onSelect }: SearchProps) {
             <Combobox.Option
               key={lang.id}
               value={lang}
-              disabled={lang.unavailable}
               onClick={() => setSelectedLang(lang)}
               className="
                 bg-zinc-300
