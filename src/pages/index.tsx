@@ -15,6 +15,7 @@ const CodeMirror = dynamic<any>(() => {
 
 function Home() {
   const [mime, setMime] = useState("txt");
+  const [mode, setMode] = useState("text");
   const [text, setText] = useState(` Analytic version: ${Analytic.getVersion()}` +
   `\n\n Put your code here to test.` +
   `\n\n Simulate commit -> create a fake commit to test churn;` + 
@@ -131,7 +132,10 @@ function Home() {
             "
           >
             <Search
-              onSelect={m => setMime(m)}
+              onSelect={(m, mode) => {
+                setMime(m);
+                setMode(mode);
+              }}
             />
             <button
               className="
@@ -184,7 +188,7 @@ function Home() {
             options={{
               theme: "dracula",
               lineNumbers: true,
-              mode: mime
+              mode
             }}
           />
         </div>

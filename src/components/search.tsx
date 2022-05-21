@@ -3,18 +3,18 @@ import { SelectorIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 
 const languages = [
-  { id: 1, name: "JavaScript", unavailable: false, mime: "js" },
-  { id: 2, name: "TypeScript", unavailable: false, mime: "ts" },
-  { id: 3, name: "JavaScript (JSX)", unavailable: false, mime: "jsx" },
-  { id: 4, name: "TypeScript (TSX)", unavailable: false, mime: "tsx" },
-  { id: 5, name: "Java", unavailable: false, mime: "java" },
-  { id: 6, name: "Python", unavailable: false, mime: "py" },
-  { id: 7, name: "Text", unavailable: false, mime: "txt" },
-  { id: 8, name: "HTML/XML", unavailable: false, mime: "xml" },
+  { id: 1, name: "JavaScript", unavailable: false, mime: "js", mode: "javascript" },
+  { id: 2, name: "TypeScript", unavailable: false, mime: "ts", mode: "javascript" },
+  { id: 3, name: "JavaScript (JSX)", unavailable: false, mime: "jsx", mode: "javascript" },
+  { id: 4, name: "javascript (TSX)", unavailable: false, mime: "tsx", mode: "javascript" },
+  { id: 5, name: "Java", unavailable: false, mime: "java", mode: "clike" },
+  { id: 6, name: "Python", unavailable: false, mime: "py", mode: "python" },
+  { id: 7, name: "Text", unavailable: false, mime: "txt", mode: "text" },
+  { id: 8, name: "HTML/XML", unavailable: false, mime: "xml", mode: "xml" }
 ]
 
 interface SearchProps {
-  onSelect: (mime: string) => void;
+  onSelect: (mime: string, mode: string) => void;
 };
 
 function Search({ onSelect }: SearchProps) {
@@ -29,7 +29,7 @@ function Search({ onSelect }: SearchProps) {
         });
 
   useEffect(() => {
-    onSelect(selectedLang.mime);
+    onSelect(selectedLang.mime, selectedLang.mode);
   }, [onSelect, selectedLang]);
 
   return (
