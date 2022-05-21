@@ -17,3 +17,57 @@ body {
 .json-number {
   @apply text-green-300
 }
+
+.ReactCodeMirror {
+  @apply
+    resize-none
+    overflow-y-auto
+    outline-none
+    ring-gray-400
+    w-full
+    h-full
+}
+
+.cm-s-dracula.CodeMirror {
+  @apply
+    accent-zinc-50
+    !bg-zinc-800
+    outline-none
+    w-full
+    !h-full
+}
+
+.CodeMirror-vscrollbar {
+  @apply
+    !w-[8px]
+    !scrollbar-thin
+    !bottom-[8px]
+    !scrollbar-thumb-zinc-400
+    !scrollbar-track-zinc-700
+}
+
+.CodeMirror-hscrollbar {
+  @apply
+    !h-[8px]
+    !scrollbar-thin
+    !right-[8px]
+    !scrollbar-thumb-zinc-400
+    !scrollbar-track-zinc-700
+}
+
+.cm-s-dracula .CodeMirror-gutters {
+  @apply
+    !bg-[#0d0d0f]
+}
+
+.CodeMirror-scrollbar-filler {
+  @apply
+    !h-[8px]
+    !w-[8px]
+    !bg-zinc-800
+}
+
+.cm-s-dracula .CodeMirror-linenumber {
+  @apply
+    !text-zinc-200
+}
