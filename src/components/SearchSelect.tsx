@@ -2,7 +2,7 @@ import { Combobox } from "@headlessui/react";
 import { SelectorIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 
-interface SearchProps {
+interface SearchSelectProps {
   onSelect: (mime: string, mode: string) => void;
 };
 
@@ -17,7 +17,7 @@ const languages = [
   { id: 8, name: "HTML", mime: "html", mode: "text/html" }
 ];
 
-function Search({ onSelect }: SearchProps) {
+function SearchSelect({ onSelect }: SearchSelectProps) {
   const [selectedLang, setSelectedLang] = useState(languages[3]);
   const [query, setQuery] = useState("");
 
@@ -113,4 +113,4 @@ function Search({ onSelect }: SearchProps) {
   )
 };
 
-export { Search };
+export { SearchSelect };
