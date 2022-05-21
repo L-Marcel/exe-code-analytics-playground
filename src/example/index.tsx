@@ -5,7 +5,7 @@ function Example() {
 
   useEffect(() => {
     if(name === "") {
-      setName("strange");
+      setName("stranger");
     };
   }, [name,setName]);
 
