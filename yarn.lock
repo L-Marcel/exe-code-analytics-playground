@@ -56,10 +56,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@lmarcel/exe-code-analytics@^4.4.7":
-  version "4.4.7"
-  resolved "https://registry.yarnpkg.com/@lmarcel/exe-code-analytics/-/exe-code-analytics-4.4.7.tgz#ee7253064623ad965c5e03e75c164bf32c9faf22"
-  integrity sha512-iRvtDy08k68owSx6u1F/UmdGe/ZNxGX1iTecNlLB5od0Z0JifMG3zzp/j9H4zLZTMFGTlJJ1jgELeTbckloP+g==
+"@lmarcel/exe-code-analytics@^4.4.8":
+  version "4.4.8"
+  resolved "https://registry.yarnpkg.com/@lmarcel/exe-code-analytics/-/exe-code-analytics-4.4.8.tgz#0f71c542a249201ac4a166a736dba61cae018607"
+  integrity sha512-WkPWEtCGi/6q50m59VldjckY7VNoPuAlxskPKwh8ILyz2H+SVpzXaOg4RcCh/0quvEYjlso8vAYSiZM6wyWa2Q==
   dependencies:
     node "^17.7.2"
 
