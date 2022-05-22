@@ -56,7 +56,7 @@ function SearchSelect({ onSelect }: SearchSelectProps) {
             ring-gray-400
             h-10
             !min-h-[2.5rem]
-            w-40
+            w-44
             hover:ring-2
             focus:ring-2
             focus-visible:ring-2

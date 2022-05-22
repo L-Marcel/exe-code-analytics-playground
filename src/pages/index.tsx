@@ -1,4 +1,4 @@
-import { Analytic, AnalyticFile } from "@lmarcel/exe-code-analytics";
+import { CodeAnalytic, CodeAnalyticFile } from "@lmarcel/exe-code-analytics";
 import { ModeMap } from "codemirror";
 import highlight from "json-highlight";
 import { debounce } from "lodash";
@@ -31,14 +31,14 @@ function Home() {
   const [text, setText] = useState(initialConfig.text);
 
   const [result, setResult] = useState<any>(null);
-  const [files, setFiles] = useState<AnalyticFile[]>([
+  const [files, setFiles] = useState<CodeAnalyticFile[]>([
     {
       path: "realtime.tsx",
       content: ""
     }
   ]);
 
-  const handleGetAnalytics = useRef(debounce((text: string, currentFiles: AnalyticFile[]) => {
+  const handleGetAnalytics = useRef(debounce((text: string, currentFiles: CodeAnalyticFile[]) => {
     const newfiles = currentFiles.map((c, i) => {
       if(i === currentFiles.length - 1) {
         return {
@@ -52,8 +52,8 @@ function Home() {
 
     setFiles(newfiles);
 
-    const analytic = new Analytic(newfiles);
-    const result = analytic.execute();
+    const codeAnalytic = new CodeAnalytic(newfiles);
+    const result = codeAnalytic.execute();
     
     if(Array.isArray(result) && result.length > 0) {
       const lastIndex = result.length - 1;
@@ -151,7 +151,7 @@ function Home() {
                 text-zinc-100
                 bg-zinc-600
                 px-4
-                py-1.5
+                py-2
                 outline-none
                 hover:bg-zinc-500
                 ring-gray-400

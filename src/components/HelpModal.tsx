@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Analytic } from "@lmarcel/exe-code-analytics";
+import { getVersion } from "@lmarcel/exe-code-analytics";
 import { Fragment, useState } from "react";
 
 function HelpModal() {
@@ -14,7 +14,7 @@ function HelpModal() {
           text-zinc-100
         bg-zinc-600
           px-4
-          py-1.5
+          py-2
           outline-none
           hover:bg-zinc-500
           ring-gray-400
@@ -148,7 +148,7 @@ function HelpModal() {
                       font-medium
                       text-lg
                     "
-                  >Analytic version:</span> <span className="text-teal-300">{Analytic.getVersion()}</span>
+                  >Analytic version:</span> <span className="text-teal-300">{getVersion()}</span>
                 </p>
                 
                 <p>
