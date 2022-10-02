@@ -1,37 +1,29 @@
-# Exe: Code Analytics Playground
-Exe Code Analytics was been created to provide a extensible code analyse to Exe: Classwork.
+<div valing="top">
+  <h1><span>Exe:</span> Code Analytics Playground</h1>
+  <p><span>Demonstração</span> de Exe Code Analytics.</p>
+  <nav>
+    <div id="repository-buttons"/>
+    <a class="navigation-link disabled" href="https://github.com/L-Marcel/exe-code-analytics-playground/blob/main/README.en-US.md" target="__blank__">
+      en-us
+    </a>
+  </nav>
+</div>
 
-I will work to make this lib more efective and extract more information!
+<br/>
 
-## Exe: Code Analytics
-Check the Exe: Code Analytics repository: [Exe Code Analytics](https://github.com/l-marcel/exe-code-analytics)
+<p>Você pode instalar o <span>Exe Code Analytics</span> rodando o comando:</p>
+<pre>
+C:\root> <span>npm</span> i @lmarcel/exe-code-analytics
+</pre>
 
-### Available extracted informations
-
-- [x] Churn //Not coveraged
-- [x] Methods
-- [x] Classes
-- [ ] Complexity //In work
-
-## Installation
-```bash
-npm install @lmarcel/exe-code-analytics
-```
-or 
-```bash
-yarn add @lmarcel/exe-code-analytics
-```
-
-## Deploy
-Check the playground: [Exe Code Analytics Playground](https://exe-code-analytics-playground.vercel.app)
-
-
-## Targets
-JavaScript, TypeScript, Java, and Python
-
-## Features
-
-- Remove comments;
-- Ignore special blocks;
-- Is not asyncronous;
-- Require just a string.
+<div id="grid"> 
+  <div id="grid-item">
+    <h2>Informações <span>extraídas</span> disponíveis:</h2>
+    <ul>
+      <li id="checked"><p>Churn;</p></li>
+      <li id="checked"><p>Métodos;</p></li>
+      <li id="checked"><p>Classes;</p></li>
+      <li id="checked"><p>Complexidade (<span>indisponível em Python</span>).</p></li>
+    </ul>
+  </div>
+</div>
